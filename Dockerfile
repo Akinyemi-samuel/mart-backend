@@ -1,5 +1,5 @@
 FROM openjdk:17
-LABEL authors="Samuel"
+LABEL authors="samuel"
 WORKDIR /app
 COPY target/mart-file.jar /app
 ENTRYPOINT ["java", "-jar", "/app/mart-file.jar"]
