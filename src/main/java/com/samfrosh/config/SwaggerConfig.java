@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.servers.Server;
 
 @OpenAPIDefinition(
+
         info = @Info(
                 contact = @Contact(
                         name = "Akinyemi samuel",
@@ -15,7 +16,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 ),
                 description = "Mart Ecommerce Application for shopping",
                 title = "Mart Ecommerce Application",
-                version = "1.0",
+                version = "2.0",
                 license = @License(
                         name = "Samuel licenses",
                         url = "http://"
