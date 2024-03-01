@@ -2,9 +2,6 @@ server:
   servlet:
     context-path: /api/v2
 spring:
-  mvc:
-    pathmatch:
-      matching-strategy: ANT_PATH_MATCHER
   profiles:
     active: default
   datasource:

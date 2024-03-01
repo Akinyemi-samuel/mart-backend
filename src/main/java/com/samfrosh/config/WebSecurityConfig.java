@@ -2,13 +2,11 @@ package com.samfrosh.config;
 
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
-import jakarta.servlet.Filter;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -24,40 +22,31 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         bearerFormat = "JWT",
         scheme = "bearer"
 )
-public class WebSecurityConfig {
+ class WebSecurityConfig {
 
-    private final  JwtAuthenticationFilter jwtauthFilter;
+    private final JwtAuthenticationFilter jwtauthFilter;
     private final AuthenticationProvider authenticationProvider;
+
+    private static final String[] AUTH_WHITELIST = {
+            // -- swagger ui
+            "/user/**",
+            "/cart/**",
+            "/product/**",
+            "/wishlist/**",
+            "/productstatus",
+            "/productcategory",
+            "/notification"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-
                 .csrf()
-                .disable()
-                .cors()
                 .and()
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests()
-                .requestMatchers(
-                        "/user/**",
-                        "/cart/**",
-                        "/product/**",
-                        "/wishlist/**",
-                        "/productstatus",
-                        "/productcategory",
-                        "/notification",
-                        "/v2/api-docs",
-                        "/v3/api-docs",
-                        "/v3/api-docs/**",
-                        "/swagger-resources",
-                        "/swagger-resources/**",
-                        "/configuration/ui",
-                        "/configuration/security",
-                        "/swagger-ui/**",
-                        "/webjars/**",
-                        "/swagger-ui.html"
-                )
+                .requestMatchers(AUTH_WHITELIST)
                 .permitAll()
                 .anyRequest()
                 .authenticated()
